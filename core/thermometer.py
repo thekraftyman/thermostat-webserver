@@ -6,8 +6,7 @@ from time import sleep
 
 class Thermometer:
 
-    def __init__(self, pin, mode="F"):
-        self._pin = pin
+    def __init__(self, mode="F"):
         self._mode = mode
 
         # set up one-wire
@@ -46,6 +45,9 @@ class Thermometer:
 
     def __int__(self):
         return int(self.temp())
+
+    def __str__(self):
+        return str(float(self))
 
     def __neg__(self):
         return - float(self)
