@@ -26,6 +26,7 @@ class Webserver:
         self.tx = tx
         self.set_thermometer()
         self.set_hvac_controller()
+        self.add_routes()
 
     def set_thermometer(self, mode="F"):
         ''' sets up the thermometer '''
@@ -47,7 +48,6 @@ class Webserver:
 
 
     def run(self):
-        self.add_routes()
         self.app.run(debug=self.debug, port=self.port, host=self.host)
 
     def add_routes(self):
