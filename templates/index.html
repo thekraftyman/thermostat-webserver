@@ -2,31 +2,20 @@
    <head>
       <title>{{ title }}</title>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+
    </head>
    <body>
       <h1>Remote HVAC Controller</h1>
       <h2>The date and time on the server is: {{ time }}</h2>
       <h2>Current stats:</h2>
-      <div id="stats">
-        <div id="temp"></div>
-        <div id="mode"></div>
-        <div id="fan"></div>
+      <div id="stats" class="stat-container">
+        <p id="temp" class="stat"></p>
+        <p id="mode" class="stat"></p>
+        <p id="fan" class="stat"></p>
       </div>
    </body>
    <footer>
-    <script type="text/javascript">
-      function update_stats() {
-        console.log("Updating stats...")
-        $.getJSON( '/stats', function(data) {
-          // console.log(data);
-          $("#temp").html(`<p>Temp: ${data["TEMP"]}</p>`);
-          $("#mode").html(`<p>Mode: ${data["MODE"]}</p>`);
-          $("#fan").html(`<p>Fan: ${data["FAN"]}</p>`);
-        });
-        // repeat
-        setTimeout( update_stats, 5000);
-      };
-      update_stats();
-    </script>
+    <script src="{{url_for('static', filename='js/update_stats.js')}}"></script>
    </footer>
 </html>

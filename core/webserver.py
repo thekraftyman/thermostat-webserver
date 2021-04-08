@@ -18,7 +18,8 @@ class Webserver:
 
     def __init__(self,rx=0, tx=1, port=80, host='0.0.0.0', debug=False):
         self.template_path = os.path.abspath('templates')
-        self.app = Flask(__name__, template_folder=self.template_path)
+        self.static_path = os.path.abspath('src')
+        self.app = Flask(__name__, static_folder=self.static_path, template_folder=self.template_path)
         self.port = port
         self.host = host
         self.debug = debug
@@ -59,8 +60,12 @@ class Webserver:
                 'title' : 'HELLO!',
                 'time': timeString
             }
-            return render_template('index.html', **templateData)
+            return render_template('index.html', **templateData) + os.getcwd()
 
         @self.app.route('/stats')
         def stats():
             return dumps({'TEMP':str(self.thermometer), 'MODE':self.hvac_controller.mode, 'FAN':self.hvac_controller.fan})
+
+        @self.app.route('/set')
+        def set():
+            return ""
