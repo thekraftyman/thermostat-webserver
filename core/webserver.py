@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import datetime
 import os
 import platform
@@ -47,17 +47,20 @@ class Webserver:
         else:
             self.hvac_controller = HVAC_Controller(self.rx, self.tx)
 
-
     def run(self):
         self.app.run(debug=self.debug, port=self.port, host=self.host)
 
     def add_routes(self):
-        @self.app.route('/')
+        @self.app.route('/', methods=['GET','POST'])
         def index():
+            # GET any vars passed in the url
+            title = request.args.get('title') if request.args.get('title') else "Hello!"
+
+            # Get current time
             now = datetime.datetime.now()
             timeString = now.strftime("%Y-%m-%d %H:%M")
             templateData = {
-                'title' : 'HELLO!',
+                'title' : title,
                 'time': timeString
             }
             return render_template('index.html', **templateData) + os.getcwd()
@@ -66,6 +69,24 @@ class Webserver:
         def stats():
             return dumps({'TEMP':str(self.thermometer), 'MODE':self.hvac_controller.mode, 'FAN':self.hvac_controller.fan})
 
-        @self.app.route('/set')
+        @self.app.route('/set', methods=['GET','POST'])
         def set():
-            return ""
+            key = None
+            # get any POST data (exit if none)
+            if request.method != 'POST':
+                return
+
+            request_data = request.get_json()
+            key  = request_data['key'] if 'key' in request_data else None
+            temp = request_data['temp'] if 'temp' in request_data else None
+            mode = request_data['mode'] if 'mode' in request_data else None
+            fan  = request_data['fan'] if 'fan' in request_data else None
+
+            # exit if all of the data isn't there
+            if False in [bool(n) for n in [key,temp,mode,fan]]:
+                return
+
+            # compare api key
+            # ...
+
+            # send data to the hvac controller
