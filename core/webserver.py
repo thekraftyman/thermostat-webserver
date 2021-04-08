@@ -3,6 +3,7 @@ import datetime
 import os
 import platform
 from json import dumps
+from hashlib import sha256
 
 # Check for a dev mode
 if platform.system() in ['Darwin','Windows']:
@@ -43,6 +44,10 @@ class Webserver:
                 def __init__(self):
                     self.mode = "OFF"
                     self.fan  = "OFF"
+
+                def send(self,*args, **kwargs):
+                    pass
+
             self.hvac_controller = fake_HVAC_Controller()
         else:
             self.hvac_controller = HVAC_Controller(self.rx, self.tx)
@@ -71,22 +76,35 @@ class Webserver:
 
         @self.app.route('/set', methods=['GET','POST'])
         def set():
-            key = None
             # get any POST data (exit if none)
             if request.method != 'POST':
-                return
+                return "Failure"
 
             request_data = request.get_json()
-            key  = request_data['key'] if 'key' in request_data else None
-            temp = request_data['temp'] if 'temp' in request_data else None
-            mode = request_data['mode'] if 'mode' in request_data else None
-            fan  = request_data['fan'] if 'fan' in request_data else None
+            key  = request_data['key'] if 'key' in request_data else False
+            temp = request_data['temp'] if 'temp' in request_data else False
+            mode = request_data['mode'] if 'mode' in request_data else False
+            fan  = request_data['fan'] if 'fan' in request_data else False
 
-            # exit if all of the data isn't there
-            if False in [bool(n) for n in [key,temp,mode,fan]]:
-                return
+            # exit if no data there
+            if True not in [bool(n) for n in [key,temp,mode,fan]]:
+                return "Failure"
+
+            # exit if no key
+            if not bool(key):
+                return "Failure"
 
             # compare api key
-            # ...
+            with open('hashed-api-key','r') as infile:
+                pre_hashed_key = infile.readline().strip()
+
+            hashed_key = sha256(key.encode('ascii')).hexdigest()
+
+            if hashed_key != pre_hashed_key:
+                return "Failure"
 
             # send data to the hvac controller
+            self.hvac_controller.send(temp, mode, fan)
+
+            # send success!
+            return "Success!"
