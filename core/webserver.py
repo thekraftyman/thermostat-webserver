@@ -17,15 +17,13 @@ else:
 
 class Webserver:
 
-    def __init__(self,rx=0, tx=1, port=80, host='0.0.0.0', debug=False):
+    def __init__(self, port=80, host='0.0.0.0', debug=False):
         self.template_path = os.path.abspath('templates')
         self.static_path = os.path.abspath('src')
         self.app = Flask(__name__, static_folder=self.static_path, template_folder=self.template_path)
         self.port = port
         self.host = host
         self.debug = debug
-        self.rx = rx
-        self.tx = tx
         self.set_thermometer()
         self.set_hvac_controller()
         self.add_routes()
@@ -50,7 +48,7 @@ class Webserver:
 
             self.hvac_controller = fake_HVAC_Controller()
         else:
-            self.hvac_controller = HVAC_Controller(self.rx, self.tx)
+            self.hvac_controller = HVAC_Controller()
 
     def run(self):
         self.app.run(debug=self.debug, port=self.port, host=self.host)
