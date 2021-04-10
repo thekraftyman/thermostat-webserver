@@ -44,7 +44,7 @@ class HVAC_Controller:
                 self._send(temp, mode, fan)
 
     def _send(self, temp, mode, fan):
-        system(build_command(temp, mode, fan))
+        system(self.build_command(temp, mode, fan))
 
     def build_command(self, temp, mode, fan):
         ''' builds the command that will be sent to the hvac unit '''
