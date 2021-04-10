@@ -6,9 +6,7 @@ from time import sleep
 
 class HVAC_Controller:
 
-    def __init__(self, rx, tx, temp_mode = "c"):
-        self._rx = rx
-        self._tx = tx
+    def __init__(self, temp_mode = "c"):
         self.temp_mode = temp_mode
         self.mode = None
         self.temp = None
