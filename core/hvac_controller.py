@@ -14,8 +14,8 @@ class HVAC_Controller:
         self.temp = None
         self.fan  = None
         self.is_on = None
-        self._modes = ["OFF","COOL","DRY","HEAT","RESEND"]
-        self._fan_speeds = ["AUTO","LOW","HIGH"]
+        self._modes = ["off","cool","dry","heat","RESEND"]
+        self._fan_speeds = ["auto","low","high"]
         self.load_config()
 
     def load_config(self):
@@ -27,6 +27,8 @@ class HVAC_Controller:
 
     def send(self, mode, temp="18", fan='auto'):
         """ Send command to hvac """
+        assert mode in self._modes
+        assert fan in self._fan_speeds
         # Check for updated commands
         if temp != self.temp or mode != self.mode or fan != self.fan or mode == "RESEND":
             # Send the command
@@ -54,7 +56,7 @@ class HVAC_Controller:
 
         # first, turn the device on
         if not self.is_on:
-            sytem(command + f'{mode}-on')
+            system(command + f'{mode}-on')
             self.is_on = True
             sleep(2)
 
