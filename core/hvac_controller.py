@@ -1,4 +1,4 @@
-self.temp# hvac_controller.py
+# hvac_controller.py
 # By: Adam Kraft
 import json
 from os import system
