@@ -25,19 +25,26 @@ class HVAC_Controller:
 
         self.controller = json_dic['controller']
 
-    def send(self, temp, mode, fan):
+    def send(self, mode, temp="18", fan='auto'):
         """ Send command to hvac """
         # Check for updated commands
         if temp != self.temp or mode != self.mode or fan != self.fan or mode == "RESEND":
             # Send the command
             if mode == "RESEND":
-                self._send(self.temp, self.mode, self.fan)
+                self._send(self.mode, self.temp, self.fan)
             else:
-                self._send(temp, mode, fan)
+                self._send(mode, temp, fan)
 
-    def _send(self, temp, mode, fan):
+    def _send(self, mode, temp="18", fan='auto'):
         ''' more logic here '''
         command = f'irsend send_once {self.controller} '
+
+        # put in the off button
+        if mode == "off":
+            system(command + 'turn-off')
+            self.is_on = False
+            return
+
 
         # make sure the mode will work
         if mode != self.mode and self.mode:
