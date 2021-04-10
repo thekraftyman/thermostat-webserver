@@ -48,4 +48,4 @@ class HVAC_Controller:
 
     def build_command(self, temp, mode, fan):
         ''' builds the command that will be sent to the hvac unit '''
-        return = f'irsend send_once {self.controller} {mode}-{fan}-{temp}{self.temp_mode}'
+        return f'irsend send_once {self.controller} {mode}-{fan}-{temp}{self.temp_mode}'
