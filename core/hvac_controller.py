@@ -68,3 +68,11 @@ class HVAC_Controller:
 
         # send the command
         system(command)
+
+    def __str__(self):
+        ''' string of statuses '''
+        toreturn  = "HVAC Controller with statuses:\n"
+        toreturn += f"\tOn:   {self.is_on}\n"
+        toreturn += f"\tMode: {self.mode}\n"
+        toreturn += f"\tTemp: {self.temp}\n"
+        toreturn += f"\tFan:  {self.fan}\n"

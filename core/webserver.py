@@ -102,7 +102,7 @@ class Webserver:
                 return "Failure"
 
             # send data to the hvac controller
-            self.hvac_controller.send(temp, mode, fan)
+            self.hvac_controller.send(mode, temp, fan)
 
             # send success!
             return "Success!"
