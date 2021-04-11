@@ -105,4 +105,4 @@ class Webserver:
             self.hvac_controller.send(mode, temp, fan)
 
             # send success!
-            return "Success!"
+            return str(self.hvac_controller)
