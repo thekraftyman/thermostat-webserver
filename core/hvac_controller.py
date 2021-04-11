@@ -76,3 +76,4 @@ class HVAC_Controller:
         toreturn += f"\tMode: {self.mode}\n"
         toreturn += f"\tTemp: {self.temp}\n"
         toreturn += f"\tFan:  {self.fan}\n"
+        return toreturn
