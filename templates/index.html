@@ -6,14 +6,16 @@
 
    </head>
    <body>
+     <div class="📄">
       <h1>Remote HVAC Controller</h1>
       <h2>The date and time on the server is: {{ time }}</h2>
-      <h2>Current stats:</h2>
       <div id="stats" class="stat-container">
-        <p id="temp" class="stat"></p>
-        <p id="mode" class="stat"></p>
-        <p id="fan" class="stat"></p>
+        <h2>Current stats:</h2>
+        <p id="tempstat" class="stat">Temp: <span id="temp"></span></p>
+        <p class="stat">Mode: <span id="mode"></span></p>
+        <p class="stat">Fan: <span id="fan"></span></p>
       </div>
+    </div>
    </body>
    <footer>
     <script src="{{url_for('static', filename='js/update_stats.js')}}"></script>

@@ -3,7 +3,7 @@ import datetime
 import os
 import platform
 from json import dumps
-from hashlib import sha256
+from core.auth import Authenticator
 
 # Check for a dev mode
 if platform.system() in ['Darwin','Windows']:
@@ -24,6 +24,7 @@ class Webserver:
         self.port = port
         self.host = host
         self.debug = debug
+        self.auth = Authenticator('hashed-api-key')
         self.set_thermometer()
         self.set_hvac_controller()
         self.add_routes()
@@ -76,7 +77,7 @@ class Webserver:
         def set():
             # get any POST data (exit if none)
             if request.method != 'POST':
-                return "Failure"
+                return "POST Failure" if not self.debug else None
 
             request_data = request.get_json()
             key  = request_data['key'] if 'key' in request_data else False
@@ -86,23 +87,18 @@ class Webserver:
 
             # exit if no data there
             if True not in [bool(n) for n in [key,temp,mode,fan]]:
-                return "Failure"
+                return "No Data Failure" if not self.debug else None
 
             # exit if no key
             if not bool(key):
-                return "Failure"
+                return "No Key Failure" if not self.debug else None
 
             # compare api key
-            with open('hashed-api-key','r') as infile:
-                pre_hashed_key = infile.readline().strip()
-
-            hashed_key = sha256(key.encode('ascii')).hexdigest()
-
-            if hashed_key != pre_hashed_key:
-                return "Failure"
+            if not self.auth.authenticate(key):
+                return "Key Value Failure" if not self.debug else None
 
             # send data to the hvac controller
             self.hvac_controller.send(temp, mode, fan)
 
             # send success!
-            return "Success!"
+            return "Success!" if not self.debug else None

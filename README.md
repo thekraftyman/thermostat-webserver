@@ -26,3 +26,6 @@ $
 ## Further Reading
 Here are resources for further development:
 - https://towardsdatascience.com/python-webserver-with-flask-and-raspberry-pi-398423cc6f5d
+- https://medium.com/@camilloaddis/smart-air-conditioner-with-raspberry-pi-an-odissey-2a5b438fe984
+- https://www.raspberrypi.org/forums/viewtopic.php?t=235256
+- https://devkimchi.com/2020/08/12/turning-raspberry-pi-into-remote-controller/
