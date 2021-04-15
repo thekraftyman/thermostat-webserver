@@ -1,6 +1,40 @@
-.stat {
-  color:blue;
+:root {
+  --color-1: hsl(217, 73%, 33%);
+  --color-2: hsl(200, 20%, 45%);
+  --color-3: hsl(288, 4%,  26%);
+  --color-4: hsl(358, 57%, 51%);
+  --color-5: hsl(59 , 63%, 55%);
+  --hot:      var(--color-4);
+  --hot-text: white;
+  --cold:      var(--color-1);
+  --cold-text: white;
+  --perfect:      var(--color-5);
+  --perfect-text: black;
 }
+
+.cold {
+  background-color: var(--cold);
+  color: var(--cold-text);
+}
+
+.hot {
+  background-color: var(--hot);
+  color: var(--hot-text);
+}
+
+.perfect {
+  background-color: var(--perfect);
+  color: var(--perfect-text);
+}
+
 .stat-container {
   border-style: dashed;
+  padding: 1rem;
+  width: clamp( 50px, 50%, 500px );
+}
+
+.📄 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
