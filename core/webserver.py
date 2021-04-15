@@ -98,7 +98,7 @@ class Webserver:
                 return "Key Value Failure" if not self.debug else None
 
             # send data to the hvac controller
-            self.hvac_controller.send(temp, mode, fan)
+            self.hvac_controller.send(mode, temp, fan)
 
             # send success!
-            return "Success!" if not self.debug else None
+            return str(self.hvac_controller)
