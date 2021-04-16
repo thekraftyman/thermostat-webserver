@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="ascii">
+    <title>Thermostat Set</title>
+  </head>
+  <body>
+    <form class="" action="/set-api" method="post">
+      <label for="mode">Mode:</label>
+      <select id="mode" name="mode">
+        <option value="heat">Heat</option>
+        <option value="cool">Cool</option>
+        <option value="dry">Dry</option>
+        <option value="off">OFF</option>
+      </select><br><br>
+      <label for="fan">Fan:</label>
+      <select id="fan" name="fan">
+        <option value="high">High</option>
+        <option value="low">Low</option>
+        <option value="auto">Auto</option>
+      </select><br><br>
+      <label for="temp">Temp:</label>
+      <select id="temp" name="temp">
+        <option value="64">64&deg;F</option>
+        <option value="66">66&deg;F</option>
+        <option value="68">68&deg;F</option>
+        <option value="70">70&deg;F</option>
+        <option value="72">72&deg;F</option>
+        <option value="74">74&deg;F</option>
+        <option value="76">76&deg;F</option>
+        <option value="78">78&deg;F</option>
+      </select><br><br>
+      <label for="key">{{ key_label }}</label>
+      <input type="{{ key_type }}" id="key" name="key" value="{{ key }}">{{ key_after|safe }}
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>
