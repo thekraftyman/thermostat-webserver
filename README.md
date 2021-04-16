@@ -23,6 +23,11 @@ To deactivate the environment, simply run (from the base dir):
 $
 ```
 
+## Wiring
+Here is the wiring diagram for the circuit. Please note that __not all parts shown are accurate__, they're just what was available on TinkerCad...
+
+![Wiring Diagram](src/img/wiring_diagram.png)
+
 ## Further Reading
 Here are resources for further development:
 - https://towardsdatascience.com/python-webserver-with-flask-and-raspberry-pi-398423cc6f5d
