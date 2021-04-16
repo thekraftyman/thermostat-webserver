@@ -67,19 +67,30 @@ class Webserver:
                 'title' : title,
                 'time': timeString
             }
-            return render_template('index.html', **templateData) + os.getcwd()
+            return render_template('index.html', **templateData)
 
         @self.app.route('/stats')
         def stats():
             return dumps({'TEMP':str(self.thermometer), 'MODE':self.hvac_controller.mode, 'FAN':self.hvac_controller.fan})
 
-        @self.app.route('/set', methods=['GET','POST'])
-        def set():
+        @self.app.route('/set-api', methods=['GET','POST'])
+        def set_api():
             # get any POST data (exit if none)
             if request.method != 'POST':
                 return "POST Failure" if not self.debug else None
 
-            request_data = request.get_json()
+            try:
+                request_data = request.get_json()
+                if not bool(request_data):
+                    raise Exception("Not json encoded")
+            except:
+                try:
+                    request_data = request.form
+                    if not bool(request_data):
+                        raise Exception("Not form data")
+                except:
+                    return "Data Retrieval Failure"
+
             key  = request_data['key'] if 'key' in request_data else False
             temp = request_data['temp'] if 'temp' in request_data else False
             mode = request_data['mode'] if 'mode' in request_data else False
@@ -102,3 +113,24 @@ class Webserver:
 
             # send success!
             return str(self.hvac_controller)
+
+        @self.app.route('/set', methods=['GET','POST'])
+        def set():
+            # get GET data
+            templateData = {
+                'key'       : '',
+                'key_type'  : '',
+                'key_label' : 'Key:',
+                'key_after' : '<br><br>'
+            }
+
+            if request.method == 'GET':
+                request_data = request.args
+                if 'key' in request_data:
+                    templateData['key'] = request_data['key']
+                    templateData['key_type'] = 'hidden'
+                    templateData['key_label'] = ''
+                    templateData['key_after'] = ''
+
+            # Render template
+            return render_template('set.html', **templateData)
