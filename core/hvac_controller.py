@@ -6,7 +6,7 @@ from time import sleep
 
 class HVAC_Controller:
 
-    def __init__(self, temp_mode = "c"):
+    def __init__(self, temp_mode = "F"):
         self.temp_mode = temp_mode
         self.mode = None
         self.temp = None
@@ -53,7 +53,7 @@ class HVAC_Controller:
             sleep(2)
 
         # first, turn the device on
-        if not self.is_on:
+        if not self.is_on and mode != 'heat':
             system(command + f'{mode}-on')
             self.is_on = True
             sleep(2)
