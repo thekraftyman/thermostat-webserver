@@ -50,13 +50,13 @@ class HVAC_Controller:
         if mode != self.mode and self.mode:
             system(command + f'turn-off')
             self.is_on = False
-            sleep(2)
+            sleep(4)
 
         # first, turn the device on
         if not self.is_on and mode != 'heat':
             system(command + f'{mode}-on')
             self.is_on = True
-            sleep(2)
+            sleep(4)
 
         # send the desired mode command
         command += f'{mode}-{fan}-{temp}{self.temp_mode}'
