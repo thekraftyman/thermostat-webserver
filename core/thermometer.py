@@ -25,7 +25,7 @@ class Thermometer:
     def temp(self):
         ''' returns the float val of the temperature '''
         if self.init_fail:
-            return "SENSOR INIT FAILURE"
+            return -1
 
         lines = self._temp_raw()
         while lines[0].strip()[-3:] != 'YES':
