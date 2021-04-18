@@ -10,14 +10,23 @@ class Thermometer:
         self._mode = mode
 
         # set up one-wire
-        system('modprobe w1-gpio')
-        system('modprobe w1-therm')
-        self.base_dir = '/sys/bus/w1/devices/'
-        self.device_folder = glob(self.base_dir + '28*')[0]
-        self.device_file = self.device_folder + '/w1_slave'
+        try:
+            system('modprobe w1-gpio')
+            system('modprobe w1-therm')
+            self.base_dir = '/sys/bus/w1/devices/'
+            self.device_folder = glob(self.base_dir + '28*')[0]
+            self.device_file = self.device_folder + '/w1_slave'
+            with open(self.device_file,'r') as infile:
+                pass
+            self.init_fail = False
+        except:
+            self.init_fail = True
 
     def temp(self):
         ''' returns the float val of the temperature '''
+        if self.init_fail:
+            return "SENSOR INIT FAILURE"
+
         lines = self._temp_raw()
         while lines[0].strip()[-3:] != 'YES':
             time.sleep(0.2)
