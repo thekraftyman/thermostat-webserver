@@ -3,6 +3,7 @@
 import json
 from os import system
 from time import sleep
+from rgbled import RGBLED
 
 class HVAC_Controller:
 
@@ -15,6 +16,7 @@ class HVAC_Controller:
         self._modes = ["off","cool","dry","heat","RESEND"]
         self._fan_speeds = ["auto","low","high"]
         self.load_config()
+        self.indicator = RGBLED(self._red_pin, self._green_pin, self._blue_pin)
 
     def load_config(self):
         ''' loads the configuration for this unit '''
@@ -22,6 +24,9 @@ class HVAC_Controller:
             json_dic = json.load(infile)
 
         self.controller = json_dic['controller']
+        self._red_pin = json_dic['red_pin']
+        self._green_pin = json_dic['green_pin']
+        self._blue_pin = json_dic['blue_pin']
 
     def send(self, mode, temp="18", fan='auto'):
         """ Send command to hvac """
