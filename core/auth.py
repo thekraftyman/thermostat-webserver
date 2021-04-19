@@ -2,14 +2,15 @@
 # By: Adam Kraft
 
 from hashlib import sha256
+from util import load_config
 
 class Authenticator:
     ''' used for authentication with a key '''
 
-    def __init__(self,key_file):
-        self._key_file = key_file
-        with open(key_file,'r') as infile:
-            self._hashed_key = infile.readline().strip()
+    def __init__(self,key_name):
+        self._key_name = key_name
+        json_dic = load_config()
+        self._hashed_key = json_dic[key_name]
 
     def authenticate(self, key):
         ''' returns comparison of pre-hashed key and key given '''

@@ -1,9 +1,9 @@
 # hvac_controller.py
 # By: Adam Kraft
-import json
 from os import system
 from time import sleep
 from rgbled import RGBLED
+from util import load_config
 
 class HVAC_Controller:
 
@@ -15,13 +15,12 @@ class HVAC_Controller:
         self.is_on = None
         self._modes = ["off","cool","dry","heat","RESEND"]
         self._fan_speeds = ["auto","low","high"]
-        self.load_config()
+        self.load_from_config()
         self.indicator = RGBLED(self._red_pin, self._green_pin, self._blue_pin)
 
-    def load_config(self):
+    def load_from_config(self):
         ''' loads the configuration for this unit '''
-        with open('config.json', 'r') as infile:
-            json_dic = json.load(infile)
+        json_dic = load_config()
 
         self.controller = json_dic['controller']
         self._red_pin = json_dic['red_pin']
