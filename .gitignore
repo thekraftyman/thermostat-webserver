@@ -4,3 +4,5 @@ core/__pycache__/
 */__pycache__/*
 api-key
 curl_test
+config.json
+hashed-api-key
