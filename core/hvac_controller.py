@@ -15,17 +15,31 @@ class HVAC_Controller:
         self.is_on = None
         self._modes = ["off","cool","dry","heat","RESEND"]
         self._fan_speeds = ["auto","low","high"]
+        self._mode_indicators = {
+            'cool': (0,0,.5),
+            'heat': (.8,0,0),
+            'dry' : (0,.5,0)
+        }
         self.load_from_config()
-        self.indicator = RGBLED(self._red_pin, self._green_pin, self._blue_pin)
+        self.init_indicator()
+
+    def init_indicator(self):
+        ''' initializes an indicator if rgb pins are specified in the config '''
+        if self._red_pin and self._green_pin and self._blue_pin:
+            # set up the led
+            self.indicator = RGBLED(self._red_pin, self._green_pin, self._blue_pin)
+
+        else:
+            self.indicator = None
 
     def load_from_config(self):
         ''' loads the configuration for this unit '''
         json_dic = load_config()
 
         self.controller = json_dic['controller']
-        self._red_pin = json_dic['red_pin']
-        self._green_pin = json_dic['green_pin']
-        self._blue_pin = json_dic['blue_pin']
+        self._red_pin = json_dic['red_pin'] if 'red_pin' in json_dic else None
+        self._green_pin = json_dic['green_pin'] if 'green_pin' in json_dic else None
+        self._blue_pin = json_dic['blue_pin'] if 'blue_pin' in json_dic else None
 
     def send(self, mode, temp="18", fan='auto'):
         """ Send command to hvac """
@@ -47,6 +61,8 @@ class HVAC_Controller:
         if mode == "off":
             system(command + 'turn-off')
             self.is_on = False
+            if self.indicator:
+                self.indicator.off()
             return
 
 
@@ -69,6 +85,10 @@ class HVAC_Controller:
         self.temp = temp if (self.temp != temp) else self.temp
         self.mode = mode if (self.mode != mode) else self.mode
         self.fan  = fan if (self.fan != fan) else self.fan
+
+        # set the indicator
+        if self.indicator:
+            self.indicator.set(self._mode_indicators[mode])
 
         # send the command
         system(command)
