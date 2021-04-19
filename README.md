@@ -4,6 +4,15 @@ This is the repo containing the python-based webserver that will be ran on a Ras
 ## Setup
 To set the libraries up, simply run `python3 -m pip install -r requirements.txt`.
 
+Before running, you'll want to set up the `config.json` file to include:
+- controller name (defined by lircd.conf): `controller`
+- hashed api key: `hashed-api-key`
+- red led pin: `red_pin`
+- green led pin: `green_pin`
+- blue led pin: `blue_pin`
+
+You can refer to `config_example.json` for an example of this configuration.
+
 ## Running the Web Server
 To run the web server, simply run `main.py` which should automatically set up everything.
 

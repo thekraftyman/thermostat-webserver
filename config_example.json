@@ -1,0 +1,7 @@
+{
+  "controller": "fujitsu_heat_ac",
+  "hashed-api-key": "YOUR_SHA256_HASHED_API_KEY_HERE",
+  "red_pin":27,
+  "green_pin":22,
+  "blue_pin":23
+}
