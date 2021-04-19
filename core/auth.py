@@ -3,6 +3,7 @@
 
 from hashlib import sha256
 from util import load_config
+from secrets import token_urlsafe as tokengen
 
 class Authenticator:
     ''' used for authentication with a key '''
@@ -25,6 +26,15 @@ class Authenticator:
     def hash(self, instring):
         ''' returns a hashed version of instring '''
         return sha256(instring.encode('ascii')).hexdigest()
+
+    def generate_key(self):
+        '''
+        returns a randomly generated api key with format:
+        xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        8-4-4-4-12 (length)
+        '''
+        return f'{tokengen(8)}-{tokengen(4)}-{tokengen(4)}-{tokengen(4)}-{tokengen(12)}'
+
 
 if __name__ == '__main__':
     from sys import argv
