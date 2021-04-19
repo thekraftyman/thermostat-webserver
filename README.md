@@ -1,5 +1,5 @@
 # (Raspberry Pi) Thermostat Webserver
-This is the repo containing the python-based webserver that will be ran on a Raspberry Pi which will act as the "hub" of my thermostat modifications. Here we will read temperature values, and communicate with an arduino that controls the thermostat via i2c.
+This is the repo containing the python-based webserver that will be ran on a Raspberry Pi which will control a heat pump using an ir led, temperature sensor, and a webserver.
 
 ## Setup
 To set the libraries up, simply run `python3 -m pip install -r requirements.txt`.
