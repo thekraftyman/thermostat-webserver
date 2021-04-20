@@ -33,7 +33,13 @@ class Thermometer:
                 '10': board.D10,
                 '11': board.D11,
                 '12': board.D12,
-                '13': board.D13
+                '13': board.D13,
+                '14': board.D14,
+                '15': board.D15,
+                '16': board.D16,
+                '17': board.D17,
+                '18': board.D18
+
             }
             self.dht_device = DHT11(dhtpins[self.therm_pin])
 
