@@ -3,7 +3,7 @@
 from os import system
 from time import sleep
 from core.rgbled import RGBLED
-from util import load_config
+from core.util import load_config
 
 class HVAC_Controller:
 
