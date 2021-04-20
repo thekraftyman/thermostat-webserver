@@ -66,7 +66,7 @@ class Thermometer:
                     temp_c = self.dht_device.temperature
                     break
                 except:
-                    continue
+                    sleep(1)
             if not temp_c:
                 raise Exception("Could not load data from DHT11 sensor")
 
