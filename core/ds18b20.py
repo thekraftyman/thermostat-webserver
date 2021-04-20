@@ -2,6 +2,7 @@
 # By: thekraftyman
 
 from os import system
+from core.thermometer import Thermometer
 from glob import glob
 import time
 
