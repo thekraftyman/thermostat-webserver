@@ -11,7 +11,7 @@ class RGBLED:
         self.blue_pin  = blue_pin
         self.red_led   = LED(red_pin)
         self.green_led = LED(green_pin)
-        self.blue_led  = LED(blue_led)
+        self.blue_led  = LED(blue_pin)
         self._leds = [self.red_led, self.green_led, self.blue_led]
         self.colors = {
             'red':    (1,0,0),
