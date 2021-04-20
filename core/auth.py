@@ -2,7 +2,7 @@
 # By: Adam Kraft
 
 from hashlib import sha256
-from util import load_config
+from core.util import load_config
 from secrets import token_urlsafe as tokengen
 
 class Authenticator:

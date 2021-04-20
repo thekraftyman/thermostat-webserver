@@ -3,7 +3,7 @@
 from os import system
 from glob import glob
 from time import sleep
-from util import load_config
+from core.util import load_config
 from adafruit_dht import DHT11
 import board
 
@@ -21,18 +21,18 @@ class Thermometer:
             self._sensor_type = 'DHT11'
             self.therm_pin = config['DHT11_pin']
             dhtpins = {
-                '1' : board.D1
-                '2' : board.D2
-                '3' : board.D3
-                '4' : board.D4
-                '5' : board.D5
-                '6' : board.D6
-                '7' : board.D7
-                '8' : board.D8
-                '9' : board.D9
-                '10': board.D10
-                '11': board.D11
-                '12': board.D12
+                '1' : board.D1,
+                '2' : board.D2,
+                '3' : board.D3,
+                '4' : board.D4,
+                '5' : board.D5,
+                '6' : board.D6,
+                '7' : board.D7,
+                '8' : board.D8,
+                '9' : board.D9,
+                '10': board.D10,
+                '11': board.D11,
+                '12': board.D12,
                 '13': board.D13
             }
             self.dht_device = DHT11(dhtpins[self.therm_pin])
