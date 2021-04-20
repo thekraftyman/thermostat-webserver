@@ -3,5 +3,7 @@
   "hashed-api-key": "YOUR_SHA256_HASHED_API_KEY_HERE",
   "red_pin":27,
   "green_pin":22,
-  "blue_pin":23
+  "blue_pin":23,
+  "temp_sensor_type": "DHT11",
+  "DHT11_pin": 12
 }
