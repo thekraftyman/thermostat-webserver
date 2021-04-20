@@ -1,7 +1,7 @@
 # util.py
 # By: Adam Kraft
 
-from json import dumps
+import json
 
 '''
 A set of functions used in various other core files/classes
