@@ -2,7 +2,7 @@
 # By: Adam Kraft
 from os import system
 from time import sleep
-from rgbled import RGBLED
+from core.rgbled import RGBLED
 from util import load_config
 
 class HVAC_Controller:
