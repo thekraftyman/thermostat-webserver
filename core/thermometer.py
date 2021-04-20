@@ -19,7 +19,7 @@ class Thermometer:
         # init DHT11
         if 'dht11' in self._sensor_type.lower():
             self._sensor_type = 'DHT11'
-            self.therm_pin = config['DHT11_pin']
+            self.therm_pin = str(config['DHT11_pin'])
             dhtpins = {
                 '1' : board.D1,
                 '2' : board.D2,
