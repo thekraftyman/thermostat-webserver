@@ -1,5 +1,5 @@
 # rgbled.py
-# By: Adam Kraft
+# By: thekraftyman
 
 from gpiozero import PWMLED as LED
 

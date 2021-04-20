@@ -1,5 +1,5 @@
 # util.py
-# By: Adam Kraft
+# By: thekraftyman
 
 import json
 

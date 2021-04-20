@@ -1,5 +1,5 @@
 # hvac_controller.py
-# By: Adam Kraft
+# By: thekraftyman
 from os import system
 from time import sleep
 from core.rgbled import RGBLED

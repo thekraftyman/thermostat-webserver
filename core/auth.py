@@ -1,5 +1,5 @@
 # auth.py
-# By: Adam Kraft
+# By: thekraftyman
 
 from hashlib import sha256
 from core.util import load_config
