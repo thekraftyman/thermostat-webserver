@@ -77,7 +77,7 @@ class Thermometer:
             # if not temp_c:
             #     raise Exception("Could not load data from DHT11 sensor")
 
-            temp_c, humidity = dht.read_retry(dht.DHT11,self.DHT11_pin)
+            temp_c, humidity = dht.read_retry(dht.DHT11,self.therm_pin)
 
             if self.mode.lower() == 'c':
                 return float(temp_c)
