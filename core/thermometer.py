@@ -5,6 +5,7 @@ from glob import glob
 from time import sleep
 from core.util import load_config
 from adafruit_dht import DHT11
+import Adafruit_DHT as dht
 import board
 
 class Thermometer:
@@ -19,29 +20,29 @@ class Thermometer:
         # init DHT11
         if 'dht11' in self._sensor_type.lower():
             self._sensor_type = 'DHT11'
-            self.therm_pin = str(config['DHT11_pin'])
-            dhtpins = {
-                '1' : board.D1,
-                '2' : board.D2,
-                '3' : board.D3,
-                '4' : board.D4,
-                '5' : board.D5,
-                '6' : board.D6,
-                '7' : board.D7,
-                '8' : board.D8,
-                '9' : board.D9,
-                '10': board.D10,
-                '11': board.D11,
-                '12': board.D12,
-                '13': board.D13,
-                '14': board.D14,
-                '15': board.D15,
-                '16': board.D16,
-                '17': board.D17,
-                '18': board.D18
-
-            }
-            self.dht_device = DHT11(dhtpins[self.therm_pin])
+            self.therm_pin = int(config['DHT11_pin'])
+            # self.therm_pin = str(config['DHT11_pin'])
+            # dhtpins = {
+            #     '1' : board.D1,
+            #     '2' : board.D2,
+            #     '3' : board.D3,
+            #     '4' : board.D4,
+            #     '5' : board.D5,
+            #     '6' : board.D6,
+            #     '7' : board.D7,
+            #     '8' : board.D8,
+            #     '9' : board.D9,
+            #     '10': board.D10,
+            #     '11': board.D11,
+            #     '12': board.D12,
+            #     '13': board.D13,
+            #     '14': board.D14,
+            #     '15': board.D15,
+            #     '16': board.D16,
+            #     '17': board.D17,
+            #     '18': board.D18
+            # }
+            # self.dht_device = DHT11(dhtpins[self.therm_pin])
 
         # init ds18b20
         elif 'ds18b20' in self._sensor_type.lower():
@@ -66,15 +67,17 @@ class Thermometer:
         if self.init_fail:
             return -1
         if self._sensor_type == 'DHT11':
-            tries = 5
-            for i in range(tries):
-                try:
-                    temp_c = self.dht_device.temperature
-                    break
-                except:
-                    sleep(1)
-            if not temp_c:
-                raise Exception("Could not load data from DHT11 sensor")
+            # tries = 5
+            # for i in range(tries):
+            #     try:
+            #         temp_c = self.dht_device.temperature
+            #         break
+            #     except:
+            #         sleep(1)
+            # if not temp_c:
+            #     raise Exception("Could not load data from DHT11 sensor")
+
+            temp_c, humidity = dht.read_retry(dht.DHT11,self.DHT11_pin)
 
             if self.mode.lower() == 'c':
                 return float(temp_c)
