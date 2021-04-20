@@ -79,7 +79,7 @@ class Thermometer:
 
             temp_c, humidity = dht.read_retry(dht.DHT11,self.therm_pin)
 
-            if self.mode.lower() == 'c':
+            if self._mode.lower() == 'c':
                 return float(temp_c)
             return float(temp_c * (9/5) + 32)
 
