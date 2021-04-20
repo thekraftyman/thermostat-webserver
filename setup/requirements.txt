@@ -2,3 +2,4 @@
 flask
 waitress
 gpiozero
+adafruit-circuitpython-dht
