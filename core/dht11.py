@@ -4,6 +4,7 @@
 import Adafruit_DHT as dht
 from core.thermometer import Thermometer
 from time import time, sleep
+from core.util import load_config
 
 class DHT11(Thermometer):
 
@@ -11,6 +12,7 @@ class DHT11(Thermometer):
         super().__init__(mode)
         self._time_delay = time_delay
         self._sensor_type = 'DHT11'
+        config = load_config()
         self.therm_pin = int(config['DHT11_pin'])
         self.init_fail = False
         self._last_called = time()

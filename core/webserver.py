@@ -4,16 +4,11 @@ import os
 import platform
 from json import dumps
 from core.auth import Authenticator
-
-# Check for a dev mode
-if platform.system() in ['Darwin','Windows']:
-    DEV_MODE = True
-
-else:
-    DEV_MODE = False
-
-    from core.thermometer import Thermometer
-    from core.hvac_controller import HVAC_Controller
+from core.util import load_config
+from core.thermometer import Thermometer
+from core.dht11 import DHT11
+from core.ds18b20 import DS18B20
+from core.hvac_controller import HVAC_Controller
 
 class Webserver:
 
@@ -31,25 +26,24 @@ class Webserver:
 
     def set_thermometer(self, mode="F"):
         ''' sets up the thermometer '''
-        if DEV_MODE:
-            self.thermometer = 10
+        config = load_config()
+        sensor_type = config['temp_sensor_type'] if 'temp_sensor_type' in config else None
+
+        # dht11 sensor
+        if sensor_type.lower() == 'dht11' and bool(sensor_type):
+            self.thermometer = DHT11(mode)
+
+        # ds18b20
+        elif sensor_type.lower() == 'ds18b20' and bool(sensor_type):
+            self.thermometer = DS18B20(mode)
+
+        # all others
         else:
             self.thermometer = Thermometer(mode)
 
     def set_hvac_controller(self):
         ''' set up hvac controller '''
-        if DEV_MODE:
-            class fake_HVAC_Controller:
-                def __init__(self):
-                    self.mode = "OFF"
-                    self.fan  = "OFF"
-
-                def send(self,*args, **kwargs):
-                    pass
-
-            self.hvac_controller = fake_HVAC_Controller()
-        else:
-            self.hvac_controller = HVAC_Controller()
+        self.hvac_controller = HVAC_Controller()
 
     def run(self):
         self.app.run(debug=self.debug, port=self.port, host=self.host)
