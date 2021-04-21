@@ -13,6 +13,8 @@ Before running, you'll want to set up the `config.json` file to include:
 
 You can refer to `config_example.json` for an example of this configuration.
 
+You'll want to install the `@types/jquery` npm module if you plan on writing any typescript. To do so just run `npm insatll --save @types/jquer` from the `src` directory.
+
 ## Running the Web Server
 To run the web server, simply run `main.py` which should automatically set up everything.
 
