@@ -3,3 +3,4 @@ flask
 waitress
 gpiozero
 adafruit-circuitpython-dht
+Adafruit-DHT --install-option='--force-pi'

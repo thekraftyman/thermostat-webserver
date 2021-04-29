@@ -29,7 +29,10 @@ class DHT11(Thermometer):
         ''' returns the float val of the temperature '''
         if self.init_fail:
             return -1
-        temp_c, humidity = dht.read_retry(dht.DHT11,self.therm_pin)
+        try:
+            temp_c, humidity = dht.read_retry(dht.DHT11,self.therm_pin)
+        except RuntimeError:
+            temp_c, humidity = -1, -1
         if self._mode.lower() == 'c':
             return float(temp_c)
         return float((temp_c * (9/5)) + 32)
