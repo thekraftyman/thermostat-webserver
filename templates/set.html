@@ -3,9 +3,10 @@
   <head>
     <meta charset="ascii">
     <title>Thermostat Set</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
   <body>
-    <form class="" action="/set-api" method="post">
+    <form name="set" class="" action="/set-api" method="post">
       <label for="mode">Mode:</label>
       <select id="mode" name="mode">
         <option value="cool">Cool</option>
@@ -34,5 +35,18 @@
       <input type="{{ key_type }}" id="key" name="key" value="{{ key }}">{{ key_after|safe }}
       <input type="submit" value="Submit">
     </form>
+
+    <script>
+    $('form[name=set]').submit(function(e){
+      e.preventDefault();
+      $.post(
+        "/set-api",
+        $(this).serialize(),
+        function(res){
+          console.log(res);
+        }
+      );
+    })
+    </script>
   </body>
 </html>
