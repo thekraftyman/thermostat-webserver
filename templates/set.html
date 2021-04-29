@@ -4,6 +4,7 @@
     <meta charset="ascii">
     <title>Thermostat Set</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{{url_for('static', filename='js/key_token.js')}}"
   </head>
   <body>
     <form name="set" class="" action="/set-api" method="post">
@@ -37,7 +38,13 @@
     </form>
 
     <script>
+    setKeyFormInput("key");
+
     $('form[name=set]').submit(function(e){
+      // set the api key in local storage
+      var apiKey = $("#key").val()
+      storeKey( apiKey );
+
       e.preventDefault();
       $.post(
         "/set-api",
