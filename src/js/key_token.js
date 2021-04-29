@@ -5,7 +5,7 @@ function getKey() {
     }
     return '';
 }
-function setKey(apiKey) {
+function storeKey(apiKey) {
     var storedKey = getKey();
     if (apiKey == storedKey) {
         // keys are the same, stop function

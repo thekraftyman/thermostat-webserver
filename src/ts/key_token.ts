@@ -6,7 +6,7 @@ function getKey(): string {
     return '';
 }
 
-function setKey( apiKey: string ) {
+function storeKey( apiKey: string ) {
     var storedKey: string = getKey();
 
     if ( apiKey == storedKey ) {
