@@ -9,12 +9,13 @@ class HVAC_Controller:
 
     def __init__(self, temp_mode = "F"):
         self.temp_mode = temp_mode
+        self.fan_temp = "64" if self.temp_mode == "F" else "30"
         self.mode = None
         self.temp = None
         self.fan  = None
         self.is_on = None
         self._init_stats()
-        self._modes = ["off","cool","dry","heat","RESEND"]
+        self._modes = ["off","fan","cool","dry","heat","RESEND"]
         self._fan_speeds = ["auto","low","high"]
         self._mode_indicators = {
             'cool': (0,0,.5),
@@ -102,7 +103,10 @@ class HVAC_Controller:
                 sleep(4)
 
             # send the desired mode command
-            command += f'{mode}-{fan}-{temp}{self.temp_mode}'
+            if mode == 'fan':
+                command += f'{mode}-{fan}-{self.fan_temp}{self.temp_mode}'
+            else:
+                command += f'{mode}-{fan}-{temp}{self.temp_mode}'
 
             # reassign the mode stuff
             self.temp = temp if (self.temp != temp) else self.temp
