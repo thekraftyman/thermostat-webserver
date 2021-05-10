@@ -87,35 +87,34 @@ class HVAC_Controller:
             self.mode = 'off'
             if self.indicator:
                 self.indicator.off()
-            return
+        
+        else:
+            # make sure the mode will work
+            if mode != self.mode and self.mode:
+                system(command + f'turn-off')
+                self.is_on = False
+                sleep(4)
 
+            # first, turn the device on
+            if not self.is_on and mode != 'heat':
+                system(command + f'{mode}-on')
+                self.is_on = True
+                sleep(4)
 
-        # make sure the mode will work
-        if mode != self.mode and self.mode:
-            system(command + f'turn-off')
-            self.is_on = False
-            sleep(4)
+            # send the desired mode command
+            command += f'{mode}-{fan}-{temp}{self.temp_mode}'
 
-        # first, turn the device on
-        if not self.is_on and mode != 'heat':
-            system(command + f'{mode}-on')
-            self.is_on = True
-            sleep(4)
+            # reassign the mode stuff
+            self.temp = temp if (self.temp != temp) else self.temp
+            self.mode = mode if (self.mode != mode) else self.mode
+            self.fan  = fan if (self.fan != fan) else self.fan
 
-        # send the desired mode command
-        command += f'{mode}-{fan}-{temp}{self.temp_mode}'
+            # set the indicator
+            if self.indicator:
+                self.indicator.set(self._mode_indicators[mode])
 
-        # reassign the mode stuff
-        self.temp = temp if (self.temp != temp) else self.temp
-        self.mode = mode if (self.mode != mode) else self.mode
-        self.fan  = fan if (self.fan != fan) else self.fan
-
-        # set the indicator
-        if self.indicator:
-            self.indicator.set(self._mode_indicators[mode])
-
-        # send the command
-        system(command)
+            # send the command
+            system(command)
 
         # set the save_state.json file
         self._save_state()
