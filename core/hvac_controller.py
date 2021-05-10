@@ -18,9 +18,10 @@ class HVAC_Controller:
         self._modes = ["off","fan","cool","dry","heat","RESEND"]
         self._fan_speeds = ["auto","low","high"]
         self._mode_indicators = {
-            'cool': (0,0,.5),
-            'heat': (.8,0,0),
-            'dry' : (0,.5,0)
+            'cool': ( 0,  0, .5),
+            'heat': (.8,  0,  0),
+            'dry' : ( 0, .5,  0),
+            'fan' : (.3, .3, .3)
         }
         self.load_from_config()
         self.init_indicator()
