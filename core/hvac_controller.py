@@ -61,6 +61,7 @@ class HVAC_Controller:
         if mode == "off":
             system(command + 'turn-off')
             self.is_on = False
+            self.mode = 'off'
             if self.indicator:
                 self.indicator.off()
             return
