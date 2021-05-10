@@ -1,7 +1,7 @@
 # dht11.py
 # By: thekraftyman
 
-from pigpio-dht import DHT11
+from pigpio-dht import DHT11 as pigpio_DHT11
 from core.thermometer import Thermometer
 from time import time, sleep
 from core.util import load_config
@@ -15,16 +15,17 @@ class DHT11(Thermometer):
         config = load_config()
         self.therm_pin = int(config['DHT11_pin'])
         self.init_fail = False
+        self._dht11 = pigpio_DHT11(self.therm_pin)
         self._last_called = time()
         self._temp = self._get_temp()
-        self._dht11 = DHT11(self.therm_pin)
 
     def temp(self):
         ''' returns the float val of the temp (calls self._get_temp()) '''
         if ((time() - self._last_called) < self._time_delay):
             return self._temp
         self._last_called = time()
-        return self._get_temp()
+        self._temp = self._get_temp()
+        return self._temp
 
     def _get_temp(self):
         ''' returns the float val of the temperature '''
