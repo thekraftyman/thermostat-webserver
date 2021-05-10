@@ -1,14 +1,14 @@
 # dht11.py
 # By: thekraftyman
 
-from pigpio-dht import DHT11
+import Adafruit_DHT as dht
 from core.thermometer import Thermometer
 from time import time, sleep
 from core.util import load_config
 
-class DHT11(Thermometer):
+class Ada_DHT11(Thermometer):
 
-    def __init__(self, mode="F", time_delay=10):
+    def __init__(self, mode="F", time_delay=20):
         super().__init__(mode)
         self._time_delay = time_delay
         self._sensor_type = 'DHT11'
@@ -17,7 +17,6 @@ class DHT11(Thermometer):
         self.init_fail = False
         self._last_called = time()
         self._temp = self._get_temp()
-        self._dht11 = DHT11(self.therm_pin)
 
     def temp(self):
         ''' returns the float val of the temp (calls self._get_temp()) '''
@@ -31,9 +30,9 @@ class DHT11(Thermometer):
         if self.init_fail:
             return -1
         try:
-            sense_out = self._dht11.read()
+            temp_c, humidity = dht.read_retry(dht.DHT11,self.therm_pin)
         except RuntimeError:
-            sense_out = {'temp_c': -1.0, 'temp_f': -1.0, 'humidity': -1, 'valid': False}
+            temp_c, humidity = -1, -1
         if self._mode.lower() == 'c':
-            return float(sense_out['temp_c'])
-        return sense_out['temp_f']
+            return float(temp_c)
+        return float((temp_c * (9/5)) + 32)
