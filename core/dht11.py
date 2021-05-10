@@ -1,7 +1,7 @@
 # dht11.py
 # By: thekraftyman
 
-from pigpio-dht import DHT11 as pigpio_DHT11
+from pigpio_dht import DHT11 as pigpio_DHT11
 from core.thermometer import Thermometer
 from time import time, sleep
 from core.util import load_config
