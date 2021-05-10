@@ -3,7 +3,7 @@
 from os import system
 from time import sleep
 from core.rgbled import RGBLED
-from core.util import load_config
+from core.util import load_config, load_state, save_state
 
 class HVAC_Controller:
 
@@ -13,6 +13,7 @@ class HVAC_Controller:
         self.temp = None
         self.fan  = None
         self.is_on = None
+        self._init_stats()
         self._modes = ["off","cool","dry","heat","RESEND"]
         self._fan_speeds = ["auto","low","high"]
         self._mode_indicators = {
@@ -22,6 +23,28 @@ class HVAC_Controller:
         }
         self.load_from_config()
         self.init_indicator()
+    
+    def _init_stats(self):
+        '''reads the save-state.json file to populate the class variables'''
+        var_dic = load_state()
+        self.mode = var_dic['mode']
+        self.temp = var_dic['temp']
+        self.fan  = var_dic['fan']
+
+        if self.mode == "off" or not self.mode:
+            self.is_on = False
+        else:
+            self.is_on = True
+    
+    def _save_state(self):
+        ''' saves the hvac params to the save-state.json file '''
+
+        save_state({
+            'mode': self.mode,
+            'temp': self.temp,
+            'fan' : self.fan
+        })
+
 
     def init_indicator(self):
         ''' initializes an indicator if rgb pins are specified in the config '''
@@ -92,6 +115,10 @@ class HVAC_Controller:
 
         # send the command
         system(command)
+
+        # set the save_state.json file
+        self._save_state()
+
 
     def __str__(self):
         ''' string of statuses '''

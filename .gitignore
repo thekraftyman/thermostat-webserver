@@ -8,3 +8,4 @@ config.json
 hashed-api-key
 src/node_modules
 src/package-lock.json
+save-state.json
