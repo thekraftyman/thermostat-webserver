@@ -13,3 +13,21 @@ def load_config():
         json_dic = json.load(infile)
 
     return json_dic
+
+def load_state():
+    ''' loads the state from the save-state.json file '''
+    try:
+        with open('save-state.json','r') as infile:
+            json_dic = json.load(infile)
+    except:
+        json_dic = {
+            "mode": None,
+            "temp": None,
+            "fan" : None
+        }
+    return json_dic
+
+def save_state(out_dic):
+    ''' saves a dictionary to the save-state.json file '''
+    with open('save-state.json','w') as outfile:
+        outfile.write(json.dumps(out_dic))
