@@ -35,6 +35,10 @@ class DHT11(Thermometer):
             sense_out = self._dht11.read()
         except RuntimeError:
             sense_out = {'temp_c': -1.0, 'temp_f': -1.0, 'humidity': -1, 'valid': False}
+            self.init_fail = True
+        except TimeoutError:
+            sense_out = {'temp_c': -1.0, 'temp_f': -1.0, 'humidity': -1, 'valid': False}
+            self.init_fail = True
         if self._mode.lower() == 'c':
             return float(sense_out['temp_c'])
         return sense_out['temp_f']
