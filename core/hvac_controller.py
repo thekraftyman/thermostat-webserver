@@ -25,7 +25,7 @@ class HVAC_Controller:
         }
         self.load_from_config()
         self.init_indicator()
-    
+
     def _init_stats(self):
         '''reads the save-state.json file to populate the class variables'''
         var_dic = load_state()
@@ -37,7 +37,7 @@ class HVAC_Controller:
             self.is_on = False
         else:
             self.is_on = True
-    
+
     def _save_state(self):
         ''' saves the hvac params to the save-state.json file '''
 
@@ -89,7 +89,7 @@ class HVAC_Controller:
             self.mode = 'off'
             if self.indicator:
                 self.indicator.off()
-        
+
         else:
             # make sure the mode will work
             if mode != self.mode and self.mode:

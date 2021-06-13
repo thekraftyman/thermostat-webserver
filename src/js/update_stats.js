@@ -23,6 +23,7 @@ function update_stats() {
         }
         // set the temp, mode, and fan values
         $("#temp").html(data.TEMP + "&deg;" + temp_unit);
+        $("#tempset").html("" + data.TEMPSET);
         $("#mode").html("" + data.MODE);
         $("#fan").html("" + data.FAN);
         $("#tempstat").attr("class", "stat " + temp_class);

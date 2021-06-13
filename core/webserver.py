@@ -65,7 +65,7 @@ class Webserver:
 
         @self.app.route('/stats')
         def stats():
-            return dumps({'TEMP':str(self.thermometer), 'MODE':self.hvac_controller.mode, 'FAN':self.hvac_controller.fan})
+            return dumps({'TEMP':str(self.thermometer),'TEMPSET':str(self.hvac_controller.temp), 'MODE':self.hvac_controller.mode, 'FAN':self.hvac_controller.fan})
 
         @self.app.route('/set-api', methods=['GET','POST'])
         def set_api():
